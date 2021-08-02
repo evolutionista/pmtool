@@ -1,0 +1,33 @@
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("This is my App"),
+  "Hello World",
+  sliderInput(inputId = "num",
+              label = "Choose a number",
+              value = 25, min = 1, max = 100),
+  date(),
+  
+  numericInput(inputId = "dlevel",
+              label = "Dipstick Level",
+              value = 5, min = 0, max = 10),
+  
+  selectInput(inputId = "technician",
+              label = "Biorepository Technician",
+              choices =c("Jennifer Ness","Amanda Moors"),
+              selected = NULL,
+              width = 200),
+  
+  plotOutput(outputId = "hist"))
+
+)
+server <- function(input, output) {
+  
+  output$hist <- renderPlot({
+    hist(rnorm(input$dlevel))
+    })
+                
+  
+}
+
+shinyApp(ui, server)
